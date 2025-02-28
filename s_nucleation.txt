@@ -1,0 +1,32 @@
+setgridsize(2048,256,1)
+setcellsize(1e-9,1e-9,1e-9)
+defregion(1,rect(60e-9,40e-9).transl(-994e-9,0,0))
+setpbc (0,1,0)
+temp = 300
+
+Msat = 580e3
+Aex = 15e-12
+Dind = 3.75e-3
+Ku1 = 0.8e6
+AnisU.setregion(0,vector(0,0,1))
+AnisU.setregion(1,vector(0,0,0))
+alpha = 0.3
+b_ext = vector(0,0,1)
+m = uniform(0,0,1)
+relax()
+minimize()
+B_ext = vector(0,0,0)
+relax()
+
+lambda = 1
+Pol = 0.7
+xi = 0.3
+fixedlayer = vector(0,0,1)
+fixedlayerposition = FIXEDLAYER_BOTTOM
+epsilonprime = 0
+j=vector(-1.4e13,0,0)
+autosave(m,1e-11)
+tableautosave(1e-11)
+tableadd(ext_topologicalcharge)
+
+run(1.5e-9)

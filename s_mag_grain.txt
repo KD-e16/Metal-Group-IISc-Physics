@@ -1,0 +1,44 @@
+setgridsize(10240,1024,64)
+setcellsize(128e-9,64e-9,64e-9)
+//defregion(1,rect(60e-9,40e-9).transl(-994e-9,0,0))
+setpbc (0,0,0)
+tem :=297
+temp = tem
+ext_makegrains(50e-9,255,456)
+
+for i:=2; i<240; i++{
+	Dind.SetRegion(i, 3e-3 + 0.5e-3*(rand()))
+	}
+
+
+Msat = 580e3
+Aex = 15e-12
+Dind = 3e-3
+Ku1 = 0.4e6
+AnisU.setregion(0,vector(0,0,1))
+AnisU.setregion(1,vector(0,0,1))
+alpha = 0.3
+b_ext = vector(0,0,1)
+m = uniform(0,0,1)
+relax()
+minimize()
+lambda = 1
+Pol = 0.7
+xi = 0.3
+fixedlayer = vector(0,0,1)
+fixedlayerposition = FIXEDLAYER_BOTTOM
+epsilonprime = 0
+B_min := -0.8
+B_max := -0.2
+B_step := 0.1
+//relax is for llg equation
+tableadd(B_ext)
+save(m)
+for B:=B_max;B>=B_min;B-=B_step{
+	B_ext = vector(0, 0, B)
+save(m)
+relax()
+tablesave()
+snapshot(m)
+
+}
