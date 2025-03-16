@@ -1,0 +1,39 @@
+setgridsize(2048,256,4)
+setcellsize(2e-9,2e-9,1e-9)
+setpbc (0,0,0)
+tem :=297
+temp = tem
+ext_make3dgrains(5e-9,1,255,universe(),1789)
+
+for i:=1; i<255; i++{
+	Dind.SetRegion(i,3.5e-3 + 0.1e-3*(rand()-0.5))
+	AnisU.SetRegion(i,vector(sin(pi*8*(rand()-0.5)/180),sin(pi*8*(rand()-0.5)/180),1-(sin(pi*8*(rand())/180))))
+	Ku1.SetRegion(i,0.8e6 + 0.1e6*(rand()-0.5))
+	}
+
+
+Msat = 580e3
+Aex = 15e-12
+alpha = 0.3
+m = randommag()
+b_ext = vector(0.001,0,0.1)
+relax()
+lambda = 1
+Pol = 0.7
+xi = 0.3
+fixedlayer = vector(0,0,1)
+fixedlayerposition = FIXEDLAYER_BOTTOM
+epsilonprime = 0
+for K:=1;k<=5;K++{
+J = vector(-4e13,0,0)
+autosave(m,5e-10)
+tableautosave(5e-10)
+relax()
+run(4e-9)
+
+J = vector(0,0,0)
+relax()
+save(m)
+save(ext_topologicalchargedensitylattice)
+}
+
